@@ -33,3 +33,27 @@ function submitNote() {
     addStickyNote(db, message.value);
     message.value = '';
 }
+
+function getAndDisplayNotes(db)
+{
+    let tx = db.transaction(['notes'], 'readonly');
+    let store = tx.objectStore('notes');
+    let req = store.openCursor();
+    let allNotes = [];
+    req.onsuccess = function(event) {
+        let cursor = event.target.result;
+
+        if (cursor != null) {
+            allNotes.push(cursor.value)
+            cursor.continue();
+        }
+
+        else {
+            displayNotes (allNotes);
+        }
+    }
+    req.onerror = function(event)
+    {
+        alert ('error in cursor request' + event.target.errorCode);
+    }
+}
