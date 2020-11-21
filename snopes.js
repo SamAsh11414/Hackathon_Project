@@ -1,8 +1,8 @@
-function searchSnopes(searchString) {
-    const url = 'https://www.snopes.com/?s=' +  searchString.replaceAll(" ", "+");
-    return fetch(url).then(response => response.text()).then(text => {
-        const parser = new DOMParser();
-        const doc = parser.parseFromString(text, 'text/html');
-        const list = doc.querySelector('.ais-hits--item');
-    });
+async function searchSnopes(searchString) {
+    const url = 'https://www.snopes.com/?s=' + searchString.replaceAll(" ", "+");
+    const response = await fetch(url);
+    const text = await response.text();
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(text, 'text/html');
+    return doc.querySelector('div.ais-hits--item');
 }
