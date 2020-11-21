@@ -1,4 +1,4 @@
-function inIfame(url, onLoad) {
+export function inIfame(url, onLoad) {
     const iframe = document.createElement('iframe');
     iframe.setAttribute('src', url);
     iframe.style.width = '0';
@@ -13,13 +13,13 @@ function inIfame(url, onLoad) {
     });
 }
 
-function searchSnopes(searchString) {
+export function searchSnopes(searchString) {
     const url = 'https://www.snopes.com/?s=' + searchString.replaceAll(' ', '+');
     return inIframe(url, iframe => iframe.contentDocument.querySelector('div.ais-hits--item'));
 }
 
 // TODO : Return all types of rating
-function getTrueFalseValue(searchString) {
+export function getTrueFalseValue(searchString) {
     const url = 'https://www.sonpes.com/?s=' + searchString.replaceAll(" ", "+");
     const topResultLink = inIframe(url, iframe => iframe.contentDocument.querySelector('.search-entry links').href);
     return inIframe(topResultLink, iframe => {

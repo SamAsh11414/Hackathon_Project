@@ -17,19 +17,7 @@ function isExtentionEnabled(tabId) {
     return enabledOn.includes(tabId) || true;
 }
 
-const disabledon = []
-
 const browserAction = browser.browserAction;
-
-function enable() {
-    browserAction.enable();
-
-}
-
-function disable() {
-    browserAction.disable();
-
-}
 
 function onClicked(tab, onClickData) {
     if(browserAction.isEnabled()) disable();
@@ -38,3 +26,14 @@ function onClicked(tab, onClickData) {
 
 browserAction.onClicked.addListener(onClicked);
 
+browser.tabs.executeScript({
+    allFrames: false,
+    runAt: 'document_start'
+    file: 'contentScripts',
+});
+
+browser.tabs.executeScript({
+    allFrames: false,
+    runAt: 'document_'
+    file: '',
+});
