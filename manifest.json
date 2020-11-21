@@ -8,8 +8,7 @@
     },
     "permissions": [
         "activeTab",
-        "menus",
-        ""
+        "menus"
     ],
     "browser_action": {
         "browser_style": true,
@@ -28,5 +27,6 @@
         //   "dark": "icons/geo-32.png",
         //   "size": 32
         // }]
+    
     }
 }
