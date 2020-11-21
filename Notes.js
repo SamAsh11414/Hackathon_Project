@@ -9,6 +9,7 @@ dbReq.onupgradeneeded = function(event) {
 
 dbReq.onsuccess = function(event) {
     db = event.target.result;
+    getAndDisplayNotes(db);
 };
 
 dbReq.onerror = function(event) {
@@ -22,7 +23,7 @@ function addStickyNote(db, message) {
     let store = tx.objectStore('notes');  
     let note = {text: message, timestamp: Date.now()};
     store.add(note);  
-    tx.oncomplete = function() { console.log('stored note!') }
+    tx.oncomplete = function() { getAndDisplayNotes(db); }
     tx.onerror = function(event) {
         alert('error storing note ' + event.target.errorCode);
     }
@@ -34,8 +35,7 @@ function submitNote() {
     message.value = '';
 }
 
-function getAndDisplayNotes(db)
-{
+function getAndDisplayNotes(db) {
     let tx = db.transaction(['notes'], 'readonly');
     let store = tx.objectStore('notes');
     let req = store.openCursor();
@@ -52,8 +52,17 @@ function getAndDisplayNotes(db)
             displayNotes (allNotes);
         }
     }
-    req.onerror = function(event)
-    {
+    req.onerror = function(event) {
         alert ('error in cursor request' + event.target.errorCode);
     }
+}
+
+function displayNotes(notes) {
+    let listHTML = '<ul>';
+    for (let i = 0; i < notes.length; i++) {
+        let note = notes[i];
+        listHTML += '<li>' + note.text + ' ' +
+            new Date(note.timestamp).toString() + '</li>';
+    }
+    document.getElementById('notes').innerHTML = listHTML;
 }
