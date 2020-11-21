@@ -109,7 +109,7 @@ window.addEventListener('DOMContentLoaded', () => {
 /*
 
 
-//Add later:
+// TODO : Quality of life stuff
 if (!db.objectStoreNames.contains('notes'))
 {
     notes = dbReq.transaction.objectStore('notes');

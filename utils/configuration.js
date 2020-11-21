@@ -48,7 +48,7 @@ export class Configurator {
                 const database = e.target.result;
                 this._prefsStore = database.createObjectStore('prefs');
                 for (const pref in this._defaultPrefs) {
-                    this._prefsStore.add();
+                    this._prefsStore.add(this._defaultPrefs[pref], pref);
                 }
             };
         });
