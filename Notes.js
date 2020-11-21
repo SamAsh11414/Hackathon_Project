@@ -4,6 +4,19 @@ let dbReq = indexedDB.open('Factcheck', 1);
 dbReq.onupgradeneeded = function(event) {
     db = event.target.result;
 
+        if (!db.objectStoreNames.contains('notes'))
+    {
+        notes = dbReq.transaction.objectStore('notes');
+    }
+        else
+    {
+        notes = dbReq.transaction.objectStore('notes');
+    }
+    
+        if (!notes.indexNames.contains('timestamp'))
+        {
+            notes.createIndex('timestamp', 'timestamp')
+        }
     let notes = db.createObjectStore('notes', {autoIncrement: true});
 };
 
@@ -20,14 +33,13 @@ function addStickyNote(db, message) {
     const tx = db.transaction(['notes'], 'readwrite');
     const tx2 = db.transaction(['notes'], 'readwrite');
     const store = tx.objectStore('notes');
-    const index = store.index('timestamp');
-    store.add(note);  
-    const  note = { text: message, timestamp: Date.now() };
+    //const index = store.index('timestamp');
+    const note = { text: message, timestamp: Date.now() };
+    store.add(note);
     tx.oncomplete = function() { getAndDisplayNotes(db); }
     tx.onerror = function(event) {
         alert('error storing note ' + event.target.errorCode);
     }
-    
 }
 
 function submitNote() {

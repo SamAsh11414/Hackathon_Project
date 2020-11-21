@@ -1,17 +1,15 @@
-/*async function searchSnopes(searchString) {
+function searchSnopes(searchString) {
     const url = 'https://www.snopes.com/?s=' + searchString.replaceAll(" ", "+");
-    const response = await fetch(url);
-    const text = await response.text();
-    const parser = new DOMParser();
-    const doc = parser.parseFromString(text, 'text/html');
-    return doc.querySelector('div.ais-hits--item');
-}*/
-
-async function getSnopesIframe(searchString) {
-    const url = 'https://www.snopes.com/?s=' + searchString.replaceAll(" ", "+");
-    const ifrm = document.createElement('iframe');
-    ifrm.setAttribute('href', url);
-    ifrm.style.width = "0";
-    return ifrm;
-    
+    const iframe = document.createElement('iframe');
+    iframe.setAttribute('src', url);
+    iframe.style.width = "0";
+    iframe.style.height = "0";
+    document.body.appendChild(iframe);
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            const searchResult = iframe.contentDocument.querySelector('div.ais-hits--item');
+            iframe.remove();
+            resolve(searchResult);
+        }, 2000);
+    });
 }
