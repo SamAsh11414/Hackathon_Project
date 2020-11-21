@@ -1,4 +1,4 @@
-import { Observable } from './observable';
+import { Observable } from './observable.mjs';
 
 const CONFIGURATION_API_VERSION = 1;
 let currentConfigurator = null;
@@ -27,7 +27,7 @@ export class Configurator {
         this._observables = new Map();
         this._defaultPrefs = defaultPrefs;
         this._broadcastChannel = new BroadcastChannel('configurator-' + namespace);
-        broadcastChannel.onmessage = message => {
+        this._broadcastChannel.onmessage = message => {
             if (message.type = 'prefUpdate') {
                 this._observables.get(message.pref)?.broadcast({
                     pref: message.pref,
