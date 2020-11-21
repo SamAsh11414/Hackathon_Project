@@ -9,6 +9,9 @@
 
 async function getSnopesIframe(searchString) {
     const url = 'https://www.snopes.com/?s=' + searchString.replaceAll(" ", "+");
-    const response = await fetch(url);
+    const ifrm = document.createElement('iframe');
+    ifrm.setAttribute('href', url);
+    ifrm.style.width = "0";
+    return ifrm;
     
 }

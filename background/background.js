@@ -19,4 +19,8 @@ function onClicked(tab, onClickData) {
 
 browserAction.onClicked.addListener(onClicked);
 
-const 
+function injectCode() {
+
+}
+
+browser.

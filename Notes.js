@@ -17,16 +17,17 @@ dbReq.onerror = function(event) {
 };
 
 function addStickyNote(db, message) {
-    let tx = db.transaction(['notes', 'someOtherStore'], 'readonly');
-    let tx2 = db.transaction(['notes'], 'readonly');
-    let tx3 = db.transaction(['someOtherStore'], 'readonly');
-    let store = tx.objectStore('notes');  
-    let note = {text: message, timestamp: Date.now()};
+    const tx = db.transaction(['notes'], 'readwrite');
+    const tx2 = db.transaction(['notes'], 'readwrite');
+    const store = tx.objectStore('notes');
+    const index = store.index('timestamp');
     store.add(note);  
+    const  note = { text: message, timestamp: Date.now() };
     tx.oncomplete = function() { getAndDisplayNotes(db); }
     tx.onerror = function(event) {
         alert('error storing note ' + event.target.errorCode);
     }
+    
 }
 
 function submitNote() {
@@ -36,24 +37,22 @@ function submitNote() {
 }
 
 function getAndDisplayNotes(db) {
-    let tx = db.transaction(['notes'], 'readonly');
-    let store = tx.objectStore('notes');
-    let req = store.openCursor();
-    let allNotes = [];
+    const tx = db.transaction(['notes'], 'readonly');
+    const store = tx.objectStore('notes');
+    const req = store.openCursor();
+    const allNotes = [];
     req.onsuccess = function(event) {
         let cursor = event.target.result;
 
         if (cursor != null) {
             allNotes.push(cursor.value)
             cursor.continue();
-        }
-
-        else {
-            displayNotes (allNotes);
+        } else {
+            displayNotes(allNotes);
         }
     }
     req.onerror = function(event) {
-        alert ('error in cursor request' + event.target.errorCode);
+        alert('error in cursor request' + event.target.errorCode);
     }
 }
 
@@ -66,3 +65,8 @@ function displayNotes(notes) {
     }
     document.getElementById('notes').innerHTML = listHTML;
 }
+
+window.addEventListener('DOMContentLoaded', () => {
+    const submitNoteBtn = document.getElementById('submitNote');
+    submitNoteBtn.addEventListener('click', submitNote);
+});
