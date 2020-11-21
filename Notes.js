@@ -1,22 +1,12 @@
 let db;
+
 let dbReq = indexedDB.open('Factcheck', 1);
+let reverseOrder;
 
 dbReq.onupgradeneeded = function(event) {
     db = event.target.result;
 
-        if (!db.objectStoreNames.contains('notes'))
-    {
-        notes = dbReq.transaction.objectStore('notes');
-    }
-        else
-    {
-        notes = dbReq.transaction.objectStore('notes');
-    }
     
-        if (!notes.indexNames.contains('timestamp'))
-        {
-            notes.createIndex('timestamp', 'timestamp')
-        }
     let notes = db.createObjectStore('notes', {autoIncrement: true});
 };
 
@@ -48,10 +38,35 @@ function submitNote() {
     message.value = '';
 }
 
-function getAndDisplayNotes(db) {
+function inReverseorder() {
+    getAndDisplayNotes(db, false);
+}
+
+function notinReverseorder() {
+    getAndDisplayNotes(db, true);
+}
+
+function Delete() {
+    const tx = db.transaction(['notes'], 'readwrite');
+    const store = tx.objectStore('notes');
+
+    store.openCursor().onsuccess = function(event) {
+        let cursor = event.target.result;
+
+        if (cursor != null) {
+            var request = cursor.delete();
+            request.onsuccess = function() {
+                console.log('Deleted')
+                getAndDisplayNotes(db);
+            }
+        } 
+    }
+}
+
+function getAndDisplayNotes(db, reverseOrder) {
     const tx = db.transaction(['notes'], 'readonly');
     const store = tx.objectStore('notes');
-    const req = store.openCursor();
+    const req = store.openCursor(null, reverseOrder ? 'prev' : 'next');
     const allNotes = [];
     req.onsuccess = function(event) {
         let cursor = event.target.result;
@@ -81,4 +96,30 @@ function displayNotes(notes) {
 window.addEventListener('DOMContentLoaded', () => {
     const submitNoteBtn = document.getElementById('submitNote');
     submitNoteBtn.addEventListener('click', submitNote);
+
+    const inReverseorderbtn = document.getElementById('inReverseorder');
+    inReverseorderbtn.addEventListener('click', inReverseorder);
+
+    const notinReverseorderbtn = document.getElementById('notinReverseorder');
+    notinReverseorderbtn.addEventListener('click', notinReverseorder);
+
+    const Deletebtn = document.getElementById('Delete');
+    Deletebtn.addEventListener('click', Delete);
 });
+/*
+
+
+//Add later:
+if (!db.objectStoreNames.contains('notes'))
+{
+    notes = dbReq.transaction.objectStore('notes');
+}
+    else
+{
+    notes = dbReq.transaction.objectStore('notes');
+}
+
+    if (!notes.indexNames.contains('timestamp'))
+    {
+        notes.createIndex('timestamp', 'timestamp')
+    }*/

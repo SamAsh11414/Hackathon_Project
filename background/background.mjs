@@ -1,8 +1,6 @@
 // When the 
 
-const browserAction = browser.browserAction;
-
-function enable() {
+unction enable() {
     browserAction.enable();
 
 }
@@ -23,4 +21,4 @@ function injectCode() {
 
 }
 
-browser.
+browser
