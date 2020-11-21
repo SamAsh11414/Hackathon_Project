@@ -1,6 +1,6 @@
 {
     "manifest_version": 2,
-    "name": "Misinformation Assist",
+    "name": "Misinformation Assistant",
     "version": "0",
 
     "background": {

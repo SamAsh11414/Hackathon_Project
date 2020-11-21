@@ -37,3 +37,7 @@ browser.tabs.executeScript({
     runAt: 'document_end',
     file: 'contentScripts/uiShow.js',
 });
+
+browser.runtime.addListener(() => {
+    
+})
