@@ -7,9 +7,6 @@
         <link rel="preconnect" href="https://fonts.gstatic.com">
         <link href="https://fonts.googleapis.com/css2?family=Xanh+Mono&display=swap" rel="stylesheet"> 
         <link rel="stylesheet" href="Factcheck.css">
-        <!-- <style>
-            @import url('https://fonts.googleapis.com/css2?family=Xanh+Mono&display=swap');
-        </style>  -->
     </head>
     <body>
         
@@ -25,12 +22,23 @@
         <h3>
             Directory:
         </h3>
-
+        <div id="tabs">
+            <button data-tabId="notes">Notes</button>
+            <button data-tabId="factchecking">Factchecking</button>
+            <button data-tabId="settings">Settings</button>
+        </div>
+        
+<!-- only one of these divs should show, write JS that allows the user to select which one they can see -->
         <div id="notes">
             <a href="Notetaking.html">Notes</a>
         </div>
         <div id="factchecking">
             <a href="">Factchecking</a>
         </div>
+        <div id="settings">
+            <a href="">Settings</a>
+        </div>
+
+
     </body>
 </html>
