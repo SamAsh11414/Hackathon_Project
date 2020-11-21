@@ -10,10 +10,6 @@
         "activeTab",
         "menus"
     ],
-    "content_scripts": {
-        "js": [],
-        ""
-    },
     "browser_action": {
         "browser_style": true,
         // "default_icon": {

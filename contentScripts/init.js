@@ -18,13 +18,20 @@ class MAFloating extends HTMLElement {
 
 class MAPopup extends MAFloating {
     constructor() {
-        super();
+        super('');
     }
 }
 
 class MANote extends MAFloating {
     constructor() {
-        super();
+        super('');
+    }
+}
+
+// TODO do a notificatoins thing, 
+class MASidebarOpener {
+    constructor() {
+
     }
 }
 
@@ -32,4 +39,8 @@ window.customElements.define('ma-sidebar', MASidebar);
 window.customElements.define('ma-note', MANote);
 window.customElements.define('ma-popup', MAPopup);
 
-window.addEventListener(DOM)
+window.addEventListener('DOMContentLoaded', () => {
+    
+});
+
+runtime

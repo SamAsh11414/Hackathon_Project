@@ -28,12 +28,12 @@ browserAction.onClicked.addListener(onClicked);
 
 browser.tabs.executeScript({
     allFrames: false,
-    runAt: 'document_start'
-    file: 'contentScripts',
+    runAt: 'document_start',
+    file: 'contentScripts/init.js',
 });
 
 browser.tabs.executeScript({
     allFrames: false,
-    runAt: 'document_'
-    file: '',
+    runAt: 'document_end',
+    file: 'contentScripts/uiShow.js',
 });
