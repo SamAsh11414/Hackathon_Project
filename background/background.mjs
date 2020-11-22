@@ -105,7 +105,7 @@ const contentScripts = [
     '/ui/init.js'
 ];
 browser.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
-    if (tab.url === 'about:blank' || !tab.url) return; 
+    if (tab.url.search('about') > -1 || !tab.url || tab.favIconUrl) return; 
     if (isExtensionEnabled(tabId) && changeInfo.status === 'loading') {
         console.log(tab)
         for (const path of contentScripts) {
