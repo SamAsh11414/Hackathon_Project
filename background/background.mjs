@@ -17,15 +17,18 @@ function displayNotes(notes) {
 }
 
 browser.runtime.onMessage.addListener((message, sender, sendResponse) => {
+    console.log('oeu')
     const { type, data } = message;
     const tx = db.transaction(['notations'], 'readwrite');
     const store = tx.objectStore('notations');
     switch (type) {
         case 'saveNote':
+            console.log('saved')
             const notations = { text: data, timestamp: Date.now() };
             store.add(notations);
             tx.onerror    = e => sendResponse(e.target.errorCode);
             tx.oncomplete = () => sendResponse(notations);
+            
             break;
         case 'deleteNote':
             // TODO delete notes by id; delete a specific note
@@ -94,45 +97,45 @@ function isExtensionEnabled(tabId) {
 
 // browser.browserAction.onClicked.addListener(onClicked);
 
-const contentScripts = [
-    '/utils/utils.js',
-    '/utils/snopes.js',
-    '/ui/sidebaropener/sidebaropener.js',
-    '/ui/sidebar/sidebar.js',
-    '/ui/stickynote/stickynote.js',
-    '/ui/popup/popup.js',
-    '/ui/init.js'
-];
-browser.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
-    if (tab.url.search('about') > -1 || !tab.url || tab.favIconUrl) return; 
-    if (isExtensionEnabled(tabId) && changeInfo.status === 'loading') {
-        console.log(tab)
-        for (const path of contentScripts) {
-            browser.tabs.executeScript(tabId, {
-                allFrames: false,
-                runAt: 'document_start',
-                file: path,
-                matchAboutBlank: false
-            }).then(
-                val => console.info(
-                    '%cfile loaded: %c"%s", returned %o',
-                    'font: 1.2em monospace;',
-                    'font: 1.2em monospace; color: blue;',
-                    path,
-                    val
-                ),
-                error => {
-                    console.info(
-                        '%cfile failed: %c"%s", error:',
-                        'font: 1.2em monospace;',
-                        'font: 1.2em monospace; color: blue;',
-                        path
-                    );
-                    console.error(error);
-                }
-            );
-        }
-    }
-}, {
-    properties: ['status']
-});
+// const contentScripts = [
+//     '/utils/utils.js',
+//     '/utils/snopes.js',
+//     '/ui/sidebaropener/sidebaropener.js',
+//     '/ui/sidebar/sidebar.js',
+//     '/ui/stickynote/stickynote.js',
+//     '/ui/popup/popup.js',
+//     '/ui/init.js'
+// ];
+// browser.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
+//     if (tab.url.search('about') > -1 || !tab.url || tab.favIconUrl) return; 
+//     if (isExtensionEnabled(tabId) && changeInfo.status === 'loading') {
+//         console.log(tab)
+//         for (const path of contentScripts) {
+//             browser.tabs.executeScript(tabId, {
+//                 allFrames: false,
+//                 runAt: 'document_start',
+//                 file: path,
+//                 matchAboutBlank: false
+//             }).then(
+//                 val => console.info(
+//                     '%cfile loaded: %c"%s", returned %o',
+//                     'font: 1.2em monospace;',
+//                     'font: 1.2em monospace; color: blue;',
+//                     path,
+//                     val
+//                 ),
+//                 error => {
+//                     console.info(
+//                         '%cfile failed: %c"%s", error:',
+//                         'font: 1.2em monospace;',
+//                         'font: 1.2em monospace; color: blue;',
+//                         path
+//                     );
+//                     console.error(error);
+//                 }
+//             );
+//         }
+//     }
+// }, {
+//     properties: ['status']
+// });

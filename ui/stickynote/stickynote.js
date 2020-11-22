@@ -6,6 +6,7 @@ function createStickyNote() {
         html: 'ui/stickynote/stickynote.html',
         css: 'ui/stickynote/stickynote.css'
     }).then(shadow => {
+        // dragging        
         let dragging = false;
         const offsets = { x: null, y: null };
         
@@ -29,8 +30,14 @@ function createStickyNote() {
         });
 
         window.addEventListener('mouseup', () => dragging = false);
+
+        // autosave
+        const textarea = shadow.getElementById('notes');
         
-        move(0, 0);
+        textarea.addEventListener('input', () => {
+            console.log('aoeusth')
+            runtime.sendMessage({ type: 'saveNote', data: textarea.value });
+        });
     });
     return stickyNote;
 }

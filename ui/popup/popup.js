@@ -5,7 +5,7 @@ function createPopup(x, y) {
         html: 'ui/popup/popup.html',
         css: 'ui/popup/popup.css'
     }).then(shadow => {
-
+        
     });
     return div;
 }

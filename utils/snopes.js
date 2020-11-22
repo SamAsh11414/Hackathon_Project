@@ -36,6 +36,9 @@ function getTrueFalseValue(searchString) {
         if(doc.querySelector('.rating-label-false'))        return 'false';
         if(doc.querySelector('.rating-label-unproven'))     return 'unproven';
         if(doc.querySelector('.rating-label-outdated'))     return 'outdated';
+        if(doc.querySelector('.rating-label-miscaptioned')) return 'miscaptioned';
+        if()
+
         return null;
     });
 }

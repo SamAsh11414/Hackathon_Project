@@ -1,7 +1,6 @@
 function throttle(fn, milli) {
-    return (...args) => {
-        
-    }
+    let throttling = false;
+    return fn;
 }
 
 // this assumes that fn will not modify args in anyway; fn is functional

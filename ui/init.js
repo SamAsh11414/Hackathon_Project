@@ -13,10 +13,16 @@ window.addEventListener('load', () => {
     }
 });
 
-// window.addEventListener('mousemove', e => {
-//     if (window.getSelection()) {
-//         const truthValue = 'true';
-//         const popup = document.createElement('ma-popup');
-//         popup.content = truthValue;
-//     }
-// });
+window.addEventListener('mousemove', e => {
+    if (window.getSelection()) {
+        const truthValue = 'true';
+        const selObj = document.getSelection();
+        const oRange = selobj.getRangeAt(0);
+        const oRect = oRange.getBoundingClientRect();
+        const x2 = oRect.x + oRect.width
+        const x = (oRect.x + x2)/2;
+        const y = oRect.y;
+        const popup = createPopup(x, y);
+        popup.content = truthValue;
+    }
+});
