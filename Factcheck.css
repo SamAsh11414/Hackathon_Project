@@ -5,8 +5,10 @@
 }
 
 body {
-    background-color: rgb(0, 0, 0);
+    background-color: rgba(0, 0, 0, .6);
     color: white;
+    padding: 10px;
+    border-radius: 10px;
 }
 
 .dark-mode {
@@ -17,4 +19,9 @@ body {
 a {
     font-size: large;
     color: red;
+}
+
+:host {
+    position: absolute;
+    top: 0px; right: 0px;
 }

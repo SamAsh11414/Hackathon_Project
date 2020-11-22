@@ -1,9 +1,9 @@
 function getDocument(url) {
-    console.log('loading url:', runtime.getURL(url));
+    console.log('loading url:', browser.runtime.getURL(url));
 
-    return fetch(runtime.getURL(url))
+    return fetch(browser.runtime.getURL(url))
         .then(res => res.text())
-        .then(text => (new DOMParser).parseFromString(text));
+        .then(text => (new DOMParser).parseFromString(text, 'text/html'));
 }
 
 class MASidebar extends HTMLElement {
@@ -11,6 +11,10 @@ class MASidebar extends HTMLElement {
         super();
         const shadow = this.attachShadow({ mode: 'closed' });
         getDocument('sidebar/sidebar.html').then(document => {
+            const linkElem = document.createElement('link');
+            linkElem.setAttribute('rel', 'stylesheet');
+            linkElem.setAttribute('href', browser.runtime.getURL('Factcheck.css'));
+            shadow.appendChild(linkElem);
             shadow.appendChild(document.body);
 
             const tabs = shadow.getElementById('tabs');
@@ -89,13 +93,13 @@ class MANote extends MAFloating {
 class MASidebarOpener extends HTMLElement {
     constructor() {
         super();
-        const shadow = this.attachShadow({ mode: 'open' });
+        const shadow = this.attachShadow({ mode: 'closed' });
         console.log('shadow was made')
         getDocument('Sidebar/sidebaropener.html').then(document => {
-            this.appendChild(document.body);
-            this.addEventListener('click', () => {
+            shadow.appendChild(document.body);
+            shadow.getElementId('sanity').addEventListener('click', e => {
                 console.log('called click handler')
-                if(this.sidebar.style.display === 'none') {
+                if (this.sidebar.style.display === 'none') {
                     this.sidebar.display = 'unset';
                 } else {
                     this.sidebar.display = 'none';
@@ -114,7 +118,7 @@ window.addEventListener('load', () => {
     console.log('the sidebar is being added');
     const sidebar = document.createElement('ma-sidebar');
     const sidebarOpener = document.createElement('ma-sidebar-opener');
-    sidebar.style.display = 'none';
+    // sidebar.style.display = 'none';
     sidebarOpener.sidebar = sidebar;
 
     document.body.appendChild(sidebar);
