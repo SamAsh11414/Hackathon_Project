@@ -1,33 +1,31 @@
 function createSidebar() {
     const sidebar = document.createElement('div');
-    sidebar.switchToTab = function (tabId) {
-        console.log(tabId)
-        for (const tabContent of this.tabContents.values()) {
-            console.log(tabContent)
-            tabContent.style.display = 'none';
-        }
-        this.tabContents.get(tabId).style.display = 'unset';
-    }
     sidebar.style.display = 'none';
+
     setShadow({
         shadow: sidebar.attachShadow({ mode: 'closed' }),
         html: 'ui/sidebar/sidebar.html',
         css: 'ui/sidebar/sidebar.css'
     }).then(shadow => {
+        const tabContents = new Map();
+        for (const tab of shadow.getElementById('tabContents').children) {
+            tabContents.set(tab.id, tab);
+        }
+        
+        function switchToTab(tabId) {
+            for (const tabContent of tabContents.values()) {
+                tabContent.style.display = 'none';
+            }
+            tabContents.get(tabId).style.display = 'unset';
+        }
+        
         const tabs = shadow.getElementById('tabs');
         tabs.addEventListener('click', e => {
             const tabId = e.target.dataset.tabid;
-            if (tabId) {
-                sidebar.switchToTab(tabId);
-            }
+            if (tabId) switchToTab(tabId);
         });
 
-        sidebar.tabContents = new Map();
-        for (const tabId of ['notes', 'facts', 'factchecking', 'settings']) {
-            sidebar.tabContents.set(tabId, shadow.getElementById(tabId));
-        }
-
-        sidebar.switchToTab('notes');
+        switchToTab('notes');
     });
     return sidebar;
 }
