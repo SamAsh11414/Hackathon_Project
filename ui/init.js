@@ -1,14 +1,16 @@
 window.addEventListener('load', () => {
-    console.log('the sidebar is being added');
-    const sidebar = document.createElement('ma-sidebar');
-    const sidebarOpener = document.createElement('ma-sidebar-opener');
-    const stickynote = document.createElement('ma-sticky-note');
-    sidebar.style.display = 'none';
-    sidebarOpener.sidebar = sidebar;
-
-    document.body.appendChild(sidebar);
-    document.body.appendChild(sidebarOpener);
-    document.body.appendChild(stickynote);
+    try {
+        console.log('the sidebar is being added');
+        const sidebar = createSidebar();
+        const sidebarOpener = createSidebarOpener(sidebar);
+        const stickynote = createStickyNote();
+    
+        document.body.appendChild(sidebar);
+        document.body.appendChild(sidebarOpener);
+        document.body.appendChild(stickynote);
+    } catch (e) {
+        console.dir(e);
+    }
 });
 
 // window.addEventListener('mousemove', e => {
