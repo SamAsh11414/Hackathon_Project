@@ -1,8 +1,11 @@
-class MAPopup extends HTMLElement {
-    constructor() {
-        super('');
-        this.setAttribute('moveable', false);
-    }
-}
+function createPopup(x, y) {
+    const div = document.createElement('div');
+    setShadow({
+        shadow: div.attachShadow({ mode: 'closed' }),
+        html: 'ui/popup/popup.html',
+        css: 'ui/popup/popup.css'
+    }).then(shadow => {
 
-window.customElements.define('ma-popup', MAPopup);
+    });
+    return div;
+}
