@@ -1,4 +1,4 @@
-class MAPopup extends MAFloating {
+class MAPopup extends HTMLElement {
     constructor() {
         super('');
         this.setAttribute('moveable', false);
