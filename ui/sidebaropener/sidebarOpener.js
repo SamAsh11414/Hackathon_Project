@@ -8,12 +8,11 @@ function createSidebarOpener(sidebar) {
     }).then(shadow => {
         const button = shadow.getElementById('sanity');
         button.handleEvent = function(event) {
-            console.log('called click handler')
-            // if (this.sidebar.style.display === 'none') {
-            //     this.sidebar.display = 'unset';
-            // } else {
-            //     this.sidebar.display = 'none';
-            // }
+            if (sidebar.style.display === 'none') {
+                sidebar.style.display = 'unset';
+            } else {
+                sidebar.style.display = 'none';
+            }
         };
         button.addEventListener('click', button);
     });
