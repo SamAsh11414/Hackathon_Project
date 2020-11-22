@@ -42,8 +42,6 @@ browser.runtime.onMessage.addListener((message, sender, sendResponse) => {
             }
             break;
         case 'getAllNotes':
-            const tx = db.transaction(['notations'], 'readonly');
-            const store = tx.objectStore('notations');
             const req = store.openCursor(null, reverseOrder ? 'prev' : 'next');
             const allNotes = [];
             req.onsuccess = function(event) {
@@ -83,6 +81,7 @@ function isExtensionEnabled(tabId) {
     return idList.includes(tabId) || true;
 }
 
+// TODO make extension disable/enable on a site through the icon
 // function onClicked(tab, onClickData) {
 //     let idList = enabledOn;
 //     if (defaultIsEnabled) idList = disabledOn;
@@ -109,26 +108,28 @@ browser.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
     if (isExtensionEnabled(tabId) && changeInfo.status === 'loading') {
         console.log(tab)
         for (const path of contentScripts) {
-            browser.tabs.executeScript({
+            browser.tabs.executeScript(tabId, {
                 allFrames: false,
                 runAt: 'document_start',
                 file: path,
                 matchAboutBlank: false
             }).then(
-                val => console.log(
+                val => console.info(
                     '%cfile loaded: %c"%s", returned %o',
                     'font: 1.2em monospace;',
                     'font: 1.2em monospace; color: blue;',
                     path,
                     val
                 ),
-                error => console.log(
-                    '%cfile failed: %c"%s", error %o',
-                    'font: 1.2em monospace;',
-                    'font: 1.2em monospace; color: blue;',
-                    path,
-                    error
-                )
+                error => {
+                    console.info(
+                        '%cfile failed: %c"%s", error:',
+                        'font: 1.2em monospace;',
+                        'font: 1.2em monospace; color: blue;',
+                        path,
+                    );
+                    console.error(error);
+                }
             );
         }
     }
