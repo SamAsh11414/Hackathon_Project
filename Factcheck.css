@@ -9,11 +9,7 @@ body {
     color: white;
     padding: 10px;
     border-radius: 10px;
-}
-
-.dark-mode {
-    background-color: black;
-    color: white;
+    height: 40%;
 }
 
 a {
@@ -22,6 +18,22 @@ a {
 }
 
 :host {
-    position: absolute;
-    top: 0px; right: 0px;
+    position: fixed;
+    height: 100%;
+    top: 0px;
+    right: 0px;
+    margin: 0;
+    padding: 0;
 }
+
+.tabs span {
+    display: inline-block;
+    background: white;
+    color:black;
+    border: black solid 1px;
+}
+
+/* .dark-mode {
+background-color: black;
+color: white;
+} */
