@@ -1,6 +1,6 @@
 function createSidebar() {
-    const div = document.createElement('div');
-    div.switchToTab = function (tabId) {
+    const sidebar = document.createElement('div');
+    sidebar.switchToTab = function (tabId) {
         console.log(tabId)
         for (const tabContent of this.tabContents.values()) {
             console.log(tabContent)
@@ -8,8 +8,9 @@ function createSidebar() {
         }
         this.tabContents.get(tabId).style.display = 'unset';
     }
+    // sidebar.style.display = 'none';
     setShadow({
-        shadow: div.attachShadow({ mode: 'closed' }),
+        shadow: sidebar.attachShadow({ mode: 'closed' }),
         html: 'ui/sidebar/sidebar.html',
         css: 'ui/sidebar/sidebar.css'
     }).then(shadow => {
@@ -17,16 +18,16 @@ function createSidebar() {
         tabs.addEventListener('click', e => {
             const tabId = e.target.dataset.tabid;
             if (tabId) {
-                div.switchToTab(tabId);
+                sidebar.switchToTab(tabId);
             }
         });
 
-        div.tabContents = new Map();
+        sidebar.tabContents = new Map();
         for (const tabId of ['notes', 'facts', 'factchecking', 'settings']) {
-            div.tabContents.set(tabId, shadow.getElementById(tabId));
+            sidebar.tabContents.set(tabId, shadow.getElementById(tabId));
         }
 
-        div.switchToTab('notes');
+        sidebar.switchToTab('notes');
     });
-    return div;
+    return sidebar;
 }
