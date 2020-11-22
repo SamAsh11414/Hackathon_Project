@@ -1,39 +1,36 @@
 function createStickyNote() {
-    const div = document.createElement('div');
-    div.move = function (x, y) {
-        console.log(x, y)
-        this.style.position = 'fixed';
-        this.style.left = x;
-        this.style.top = y;
-    };
+    const stickyNote = document.createElement('div');
+
     setShadow({
-        shadow: div.attachShadow({ mode: 'closed' }),
-        html: 'ui/note/stickynote.html',
-        css: 'ui/note/stickynote.css',
+        shadow: stickyNote.attachShadow({ mode: 'closed' }),
+        html: 'ui/stickynote/stickynote.html',
+        css: 'ui/stickynote/stickynote.css'
     }).then(shadow => {
-        let moving = false;
-        window.addEventListener('mousedown', e => {
-            // console.log('down')
-            moving = true;
+        let dragging = false;
+        const offsets = { x: null, y: null };
+        
+        const dragBar = shadow.getElementById('dragBar');
+
+        dragBar.addEventListener('mousedown', e => {
+            dragging = true;
+            offsets.x = e.offsetX;
+            offsets.y = e.offsetY;
+            e.preventDefault();
         });
         
         window.addEventListener('mousemove', e => {
-            // console.log('move')
-            if (moving === true) {
-                that.move(e.pageX, e.pageY);
+            if (dragging === true) {
+                const x = e.clientX - offsets.x;
+                const y = e.clientY - offsets.y;
+                stickyNote.style.position = 'fixed';
+                stickyNote.style.left = x + 'px';
+                stickyNote.style.top = y + 'px';
             }
         });
 
-        window.addEventListener('mouseup', e => {
-            // console.log('up')
-            if (moving === true) {
-                div.move(e.pageX, e.pageY);
-            }
-            moving = false;
-        });
-
+        window.addEventListener('mouseup', () => dragging = false);
         
-        div.move(0, 0);
+        move(0, 0);
     });
-    return div;
+    return stickyNote;
 }
