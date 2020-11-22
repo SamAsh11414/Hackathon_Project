@@ -69,34 +69,40 @@ browser.runtime.onMessage.addListener((message, sender, sendResponse) => {
 
 // TODO make sure stuff still works across browser restarts
 
-const maConfig = new Configurator('ma-config', PREFS);
-setConfigurator(maConfig);
+// const maConfig = new Configurator('ma-config', PREFS);
+// setConfigurator(maConfig);
 
 let defaultIsEnabled = true;
 const enabledOn = [];
 const disabledOn = [];
 
-function isExtentionEnabled(tabId) {
-    if (defaultIsEnabled) {
-        return disabledOn.includes(tabId) || true;
-    }
-    return enabledOn.includes(tabId) || true;
+function isExtensionEnabled(tabId) {
+    let idList = enabledOn;
+    if (defaultIsEnabled) idList = disabledOn;
+    
+    return idList.includes(tabId) || true;
 }
 
-function onClicked(tab, onClickData) {
-    if(browserAction.isEnabled()) disable();
-    else enable();
-}
+// function onClicked(tab, onClickData) {
+//     let idList = enabledOn;
+//     if (defaultIsEnabled) idList = disabledOn;
+    
+//     const index = idList.findIndex(id => id === tab.id);
 
-browser.browserAction.onClicked.addListener(onClicked);
+//     if (browserAction.isEnabled()) ;
+//     else enable();
+// }
+
+// browser.browserAction.onClicked.addListener(onClicked);
 
 browser.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
-    if (isExtensionEnabled(irl), changeInfo.url !== 'about:blank') {
+    if (isExtensionEnabled(tabId)) {
         console.log('injecting')
         browser.tabs.executeScript({
             allFrames: false,
             runAt: 'document_start',
             file: '/contentScripts/init.js',
+            matchAboutBlank: false
         });
     }
 });

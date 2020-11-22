@@ -1,5 +1,6 @@
 function getDocument(url) {
-    console.log('loading url:', url);
+    console.log('loading url:', runtime.getURL(url));
+
     return fetch(runtime.getURL(url))
         .then(res => res.text())
         .then(text => (new DOMParser).parseFromString(text));
@@ -8,7 +9,7 @@ function getDocument(url) {
 class MASidebar extends HTMLElement {
     constructor() {
         super();
-        const shadow = this.attachShadow({ mode: 'close' });
+        const shadow = this.attachShadow({ mode: 'closed' });
         getDocument('sidebar/sidebar.html').then(document => {
             shadow.appendChild(document.body);
 
@@ -77,7 +78,6 @@ class MANote extends MAFloating {
         });
     }
 
-    
     attributeChangedCallback(name, oldValue, newValue) {
         if (name === 'text') {
             this.textarea.value = newValue;
@@ -89,7 +89,8 @@ class MANote extends MAFloating {
 class MASidebarOpener extends HTMLElement {
     constructor() {
         super();
-        const shadow = this.attachShadow({ mode: 'close' });
+        const shadow = this.attachShadow({ mode: 'open' });
+        console.log('shadow was made')
         getDocument('Sidebar/sidebaropener.html').then(document => {
             this.appendChild(document.body);
             this.addEventListener('click', () => {
@@ -119,6 +120,8 @@ window.addEventListener('load', () => {
     document.body.appendChild(sidebar);
     document.body.appendChild(sidebarOpener);
 });
+
+window.getDocument = getDocument;
 
 // runtime.connect()
 
