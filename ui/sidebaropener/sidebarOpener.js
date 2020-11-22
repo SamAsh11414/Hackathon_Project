@@ -8,8 +8,8 @@ class MASidebarOpener extends HTMLElement {
             html: 'ui/sidebaropener/sidebaropener.html',
             css: 'ui/sidebaropener/sidebaropener.css'
         }).then(shadow => {
-            console.log(shadow.getElementId('sanity'))
-            shadow.getElementId('sanity').addEventListener('click', e => {
+            console.log(shadow.getElementById('sanity'))
+            shadow.getElementById('sanity').addEventListener('click', e => {
                 console.log('called click handler')
                 if (this.sidebar.style.display === 'none') {
                     this.sidebar.display = 'unset';
