@@ -1,0 +1,9 @@
+#content {
+    background-color: white;
+    color: black;
+    height: 100px;
+}
+
+:host {
+    position: fixed;
+}

@@ -1,6 +1,13 @@
 function throttle(fn, milli) {
     let throttling = false;
-    return fn;
+    return (...args) => {
+        if (throttling) return;
+        throttling = true;
+        setTimeout(() => {
+            throttling = false;
+            return fn(...args);
+        }, milli);
+    };
 }
 
 // this assumes that fn will not modify args in anyway; fn is functional
@@ -9,7 +16,6 @@ function memorize(fn, thisVal) {
     return (...args) => 
         memorization.get(args) || memorization.set(args, fn.apply(thisVal, args)).get(args);
 }
-
 
 function getText(url) {
     return fetch(browser.runtime.getURL(url)).then(res => res.text());

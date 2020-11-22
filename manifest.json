@@ -3,28 +3,34 @@
     "name": "Misinformation Assistant",
     "version": "0",
 
-    "content_scripts": [
-        {
-            "matches": ["<all_urls>"],
-            "js": [
-                "utils/utils.js",
-                "utils/snopes.js",
-                "ui/sidebaropener/sidebaropener.js",
-                "ui/sidebar/sidebar.js",
-                "ui/stickynote/stickynote.js",
-                "ui/popup/popup.js",
-                "ui/init.js"
-            ],
-            "run_at": "document_start"
-        }
-    ],
+    // "content_scripts": [
+    //     {
+    //         "matches": ["<all_urls>"],
+    //         "js": [
+    //             "utils/utils.js",
+    //             "utils/snopes.js",
+    //             "ui/sidebaropener/sidebaropener.js",
+    //             "ui/sidebar/sidebar.js",
+    //             "ui/stickynote/stickynote.js",
+    //             "ui/popup/popup.js",
+    //             "ui/init.js"
+    //         ],
+    //         "run_at": "document_start"
+    //     }
+    // ],
     "background": {
         "page": "background/background.html"
+    },
+    "icons": {
+        "48": "Misinfologo5.svg",
+        "96": "Misinfologo5.svg"
     },
     "permissions": [
         "<all_urls>",
         "menus",
-        "tabs"
+        "tabs",
+        "webRequest",
+        "webRequestBlocking"
     ],
     "browser_action": {
         "default_title": "Factcheck"

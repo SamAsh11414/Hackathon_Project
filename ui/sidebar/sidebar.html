@@ -1,35 +1,51 @@
-<!-- <script src="Factcheck.js"></script> -->
 <link rel="preconnect" href="https://fonts.gstatic.com">
-<script src="/background/background.mjs"></script>
 <link href="https://fonts.googleapis.com/css2?family=Xanh+Mono&display=swap" rel="stylesheet"> 
-<!-- <link rel="stylesheet" href="Factcheck.css"> -->
 
-<div id="tabs">
-    <span data-tabid="notes">Notes</span>
-    <span data-tabid="factchecking">Factchecking</span>
-    <span data-tabid="settings">Settings</span>
+<div id="Allstuff">
+    <div id="tabs">
+        <button style="color:rgba(255, 255, 255, 1)" data-tabid="notes">Notes</button>
+        <button data-tabid="factchecking">Factchecking</button>
+        <button data-tabid="settings">Settings</button>
+    </div>
+
+    <div id="tabContents">
+        <section id="notes">
+            <div id="notations">
+
+            </div>
+            <button id="addNote">Add note</button>
+        </section>
+        <section id="facts">
+            facts
+        </section>
+        <section id="factchecking">
+            factchecking
+        </section>
+        <section id="settings" >
+            <h1>
+                Settings:
+            </h1>
+            <h3>
+                Select Background Color:
+            </h3>
+            <select name="Backgroundcolor" id="Backgroundcolor"> 
+                <option value="rgba(69, 161, 255, 0.7)">Blue</option>
+                <option value="rgba(255, 26, 217, 0.7)">Magenta</option>
+                <option value="rgba(255, 233, 0, 0.7)">Yellow</option>
+            </select>
+            <h3>
+                Select Font Color:
+            </h3>
+            <select name="Fcolor" id="Fcolor"> 
+                <option value2="rgba(255, 255, 255, 1)">White</option>
+                <option value2="rgba(0, 0, 0, 1)">Black</option>
+                <option value2="rgba(255, 0, 0, 1)">Red</option>
+            </select>
+            <!-- Font choice:  -->
+            <!-- Font color: -->
+            <!-- Background color: -->
+            <!-- disabled sites -->
+            <!--  -->
+        </section>
+    </div>
 </div>
-
-<!-- only one of these divs should show, write JS that allows the user to select which one they can see -->
-<div id="tabContents">
-    <section id="notes">
-        <div id="notations">
-
-        </div>
-    </section>
-    <section id="facts">
-        facts
-    </section>
-    <section id="factchecking">
-        factchecking
-    </section>
-    <section id="settings">
-        settings
-    </section>
-</div>
-<!-- <h3>
-    Directory:
-</h3> -->
-<!-- <p>
-    Welcome to Misinformation Assistant
-</p> -->

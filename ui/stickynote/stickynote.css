@@ -8,7 +8,7 @@ textarea {
 
 div {
     /* padding: 30px; */
-    background: black;
+    background: rgba(69, 161, 255, 1);
 }
 
 #dragBar {
@@ -18,10 +18,7 @@ div {
 :host {
     display: block;
     position: fixed;
-    top: 0;
-    left: 0;
     width: 300px;
     height: 300px;
-    z-index: 100000;
-    /* border-radius: 10px; */
+    z-index: 2147483647;
 }

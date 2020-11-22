@@ -32,12 +32,12 @@ function createStickyNote() {
         window.addEventListener('mouseup', () => dragging = false);
 
         // autosave
-        const textarea = shadow.getElementById('notes');
-        
-        textarea.addEventListener('input', () => {
-            console.log('aoeusth')
-            runtime.sendMessage({ type: 'saveNote', data: textarea.value });
-        });
+        const textarea = shadow.getElementById('note');
+        textarea.addEventListener('input', throttle(() => {
+            browser.runtime.sendMessage({ type: 'saveNote', data: textarea.value });
+        }, 500));
     });
     return stickyNote;
 }
+
+
