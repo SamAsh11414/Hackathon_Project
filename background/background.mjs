@@ -106,7 +106,7 @@ const contentScripts = [
 ];
 browser.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
     if (tab.url === 'about:blank' || !tab.url) return; 
-    if (isExtensionEnabled(tabId) && changeInfo.status === 'complete') {
+    if (isExtensionEnabled(tabId) && changeInfo.status === 'loading') {
         console.log(tab)
         for (const path of contentScripts) {
             browser.tabs.executeScript({
@@ -114,7 +114,22 @@ browser.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
                 runAt: 'document_start',
                 file: path,
                 matchAboutBlank: false
-            });
+            }).then(
+                val => console.log(
+                    '%cfile loaded: %c"%s", returned %o',
+                    'font: 1.2em monospace;',
+                    'font: 1.2em monospace; color: blue;',
+                    path,
+                    val
+                ),
+                error => console.log(
+                    '%cfile failed: %c"%s", error %o',
+                    'font: 1.2em monospace;',
+                    'font: 1.2em monospace; color: blue;',
+                    path,
+                    error
+                )
+            );
         }
     }
 }, {
