@@ -19,8 +19,9 @@ class MASidebar extends HTMLElement {
 
             const tabs = shadow.getElementById('tabs');
             tabs.addEventListener('click', e => {
-                if (e.target instanceof HTMLButtonElement) {
-                    this.switchToTab(e.target.dataset.tabId);
+                const tabId = e.target.dataset.tabId;
+                if (tabId) {
+                    this.switchToTab(tabId);
                 }
             });
     
@@ -34,8 +35,10 @@ class MASidebar extends HTMLElement {
     }
 
     switchToTab(tabId) {
-        for (const tabContents of this.tabContents.values()) {
-            tabContents.style.display = 'none';
+        console.log(tabId)
+        for (const tabContent of this.tabContents.values()) {
+            console.log(tabContent)
+            tabContent.style.display = 'none';
         }
         this.tabContents.get(tabId).style.display = 'unset';
     }
@@ -47,7 +50,7 @@ class MAFloating extends HTMLElement {
         const shadow = this.attachShadow({ mode: 'open' });
         getDocument(floatingContentURL).then(document => {
             shadow.appendChild(document.body);
-            if (onLoad) onLoad(document);
+            if (onLoad) onLoad(document, shadow);
         });
     }
 
@@ -71,15 +74,54 @@ class MAPopup extends MAFloating {
     }
 }
 
-class MANote extends MAFloating {
+class MAStickyNote extends HTMLElement {
     constructor() {
-        super('ui/note/sticknote.html', document => {
-            this.textarea = document.getElementById('note');
-            this.textarea.addEventListener('input', throttle(() => {
-                runtime.sendMessage();
-            }, 200))
-            this.setAttribute('moveable', true);
+        super();
+        const shadow = this.attachShadow({ mode: 'open' });
+        const that = this;
+        getDocument('ui/note/stickynote.html').then(document => {
+            shadow.appendChild(document.body);
+            // this.textarea = document.getElementById('note');
+            // this.textarea.addEventListener('input', throttle(() => {
+            //     runtime.sendMessage();
+            // }, 200))
+            console.log(document)
+
+            let moving = false;
+            window.addEventListener('mousedown', e => {
+                // console.log('down')
+                moving = true;
+            });
+            
+            window.addEventListener('mousemove', e => {
+                // console.log('move')
+                that.move(e.pageX, e.pageY);
+                if (moving === true) {
+                }
+            });
+
+            window.addEventListener('mouseup', e => {
+                // console.log('up')
+                console.log(that)
+                console.log(this)
+                that.move(e.pageX, e.pageY);
+                if (moving === true) {
+                }
+                moving = false;
+            });
+
+            
+            that.move(0, 0);
+            
+            that.setAttribute('moveable', true);
         });
+    }
+    
+    move(x, y) {
+        console.log(x, y)
+        this.style.position = 'fixed';
+        this.style.left = x;
+        this.style.top = y;
     }
 
     attributeChangedCallback(name, oldValue, newValue) {
@@ -110,22 +152,32 @@ class MASidebarOpener extends HTMLElement {
 }
 
 window.customElements.define('ma-sidebar', MASidebar);
-window.customElements.define('ma-note', MANote);
+window.customElements.define('ma-note', MAStickyNote);
 window.customElements.define('ma-popup', MAPopup);
 window.customElements.define('ma-sidebar-opener', MASidebarOpener);
 
 window.addEventListener('load', () => {
     console.log('the sidebar is being added');
-    const sidebar = document.createElement('ma-sidebar');
-    const sidebarOpener = document.createElement('ma-sidebar-opener');
+    // const sidebar = document.createElement('ma-sidebar');
+    // const sidebarOpener = document.createElement('ma-sidebar-opener');
+    const stickynote = document.createElement('ma-note');
     // sidebar.style.display = 'none';
-    sidebarOpener.sidebar = sidebar;
+    // sidebarOpener.sidebar = sidebar;
 
-    document.body.appendChild(sidebar);
-    document.body.appendChild(sidebarOpener);
+    // document.body.appendChild(sidebar);
+    // document.body.appendChild(sidebarOpener);
+    document.body.appendChild(stickynote);
 });
 
-window.getDocument = getDocument;
+// searchSnopes(searchString)
+// getTrueFalseValue(searchString)
+// window.addEventListener('mousemove', e => {
+//     if (window.getSelection()) {
+//         const truthValue = 'true';
+//         const popup = document.createElement('ma-popup');
+//         popup.content = truthValue;
+//     }
+// });
 
 // runtime.connect()
 

@@ -1,7 +1,7 @@
 // TODO test all this code
 
 // TODO Make sure that this function works 
-export function inIframe(url, onLoad) {
+function inIframe(url, onLoad) {
     const iframe = document.createElement('iframe');
     iframe.setAttribute('src', url);
     iframe.style.width = '0';
@@ -18,13 +18,13 @@ export function inIframe(url, onLoad) {
     });
 }
 
-export function searchSnopes(searchString) {
+function searchSnopes(searchString) {
     const url = 'https://www.snopes.com/?s=' + searchString.replaceAll(' ', '+');
     return inIframe(url, iframe => iframe.contentDocument.querySelector('div.ais-hits--item'));
 }
 
 // TODO : Return all types of rating
-export function getTrueFalseValue(searchString) {
+function getTrueFalseValue(searchString) {
     const url = 'https://www.sonpes.com/?s=' + searchString.replaceAll(' ', '+');
     const topResultLink = inIframe(url, iframe => iframe.contentDocument.querySelector('.search-entry links').href);
     return inIframe(topResultLink, iframe => {
