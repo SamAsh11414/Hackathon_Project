@@ -9,7 +9,7 @@ dbreq.onsuccess       = e => db = e.target.result;
 dbreq.onerror         = e => alert('error opening database ' + e.target.errorCode);
 dbreq.onupgradeneeded = e => {
     db = e.target.result;
-    let notations = db.createObjectStore('notations', { autoIncrement: true });
+    db.createObjectStore('notations', { autoIncrement: true });
 };
 
 function displayNotes(notes) {
@@ -95,14 +95,23 @@ function isExtensionEnabled(tabId) {
 
 // browser.browserAction.onClicked.addListener(onClicked);
 
+const contentScripts = [
+    '/utils/utils.js',
+    '/utils/snopes.js',
+    '/ui/sidebaropener/sidebaropener.js',
+    '/ui/sidebar/sidebar.js',
+    '/ui/stickynote/stickynote.js',
+    '/ui/popup/popup.js'
+];
 browser.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
     if (isExtensionEnabled(tabId)) {
-        console.log('injecting')
-        browser.tabs.executeScript({
-            allFrames: false,
-            runAt: 'document_start',
-            file: '/contentScripts/init.js',
-            matchAboutBlank: false
-        });
+        for (const path of contentScripts) {
+            browser.tabs.executeScript({
+                allFrames: false,
+                runAt: 'document_start',
+                file: path,
+                matchAboutBlank: false
+            });
+        }
     }
 });
