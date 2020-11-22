@@ -15,14 +15,14 @@ function createSidebar() {
     }).then(shadow => {
         const tabs = shadow.getElementById('tabs');
         tabs.addEventListener('click', e => {
-            const tabId = e.target.dataset.tabId;
+            const tabId = e.target.dataset.tabid;
             if (tabId) {
                 div.switchToTab(tabId);
             }
         });
 
         div.tabContents = new Map();
-        for (const tabId of ['notes', 'factchecking', 'settings']) {
+        for (const tabId of ['notes', 'facts', 'factchecking', 'settings']) {
             div.tabContents.set(tabId, shadow.getElementById(tabId));
         }
 
