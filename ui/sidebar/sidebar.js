@@ -2,7 +2,7 @@ class MASidebar extends HTMLElement {
     constructor() {
         super();
         const shadow = this.attachShadow({ mode: 'closed' });
-        getDocument('sidebar/sidebar.html').then(document => {
+        getText('sidebar/sidebar.html').then(text => {
             const linkElem = document.createElement('link');
             linkElem.setAttribute('rel', 'stylesheet');
             linkElem.setAttribute('href', browser.runtime.getURL('Factcheck.css'));

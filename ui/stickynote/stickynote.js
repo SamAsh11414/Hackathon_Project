@@ -3,7 +3,7 @@ class MAStickyNote extends HTMLElement {
         super();
         const shadow = this.attachShadow({ mode: 'open' });
         const that = this;
-        getDocument('ui/note/stickynote.html').then(document => {
+        getText('ui/note/stickynote.html').then(document => {
             shadow.appendChild(document.body);
             // this.textarea = document.getElementById('note');
             // this.textarea.addEventListener('input', throttle(() => {
