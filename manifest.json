@@ -8,11 +8,11 @@
     },
     "permissions": [
         "<all_urls>",
-        "menus"
+        "menus",
+        "tabs"
     ],
     "browser_action": {
         "browser_style": true,
         "default_title": "Factcheck"
-        // "default_popup": "Factcheck.html"
     }
 }

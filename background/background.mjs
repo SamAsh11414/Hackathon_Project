@@ -104,7 +104,9 @@ const contentScripts = [
     '/ui/popup/popup.js'
 ];
 browser.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
-    if (isExtensionEnabled(tabId)) {
+    if (tab.url === 'about:blank' || !tab.url) return; 
+    if (isExtensionEnabled(tabId) && changeInfo.status === 'complete') {
+        console.log(tab)
         for (const path of contentScripts) {
             browser.tabs.executeScript({
                 allFrames: false,
@@ -114,4 +116,6 @@ browser.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
             });
         }
     }
+}, {
+    properties: ['status']
 });
