@@ -8,7 +8,7 @@ function createSidebar() {
         }
         this.tabContents.get(tabId).style.display = 'unset';
     }
-    // sidebar.style.display = 'none';
+    sidebar.style.display = 'none';
     setShadow({
         shadow: sidebar.attachShadow({ mode: 'closed' }),
         html: 'ui/sidebar/sidebar.html',
