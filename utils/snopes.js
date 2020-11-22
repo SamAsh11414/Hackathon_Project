@@ -37,7 +37,12 @@ function getTrueFalseValue(searchString) {
         if(doc.querySelector('.rating-label-unproven'))     return 'unproven';
         if(doc.querySelector('.rating-label-outdated'))     return 'outdated';
         if(doc.querySelector('.rating-label-miscaptioned')) return 'miscaptioned';
-        if()
+        if(doc.querySelector('.rating-label-correct-attribution')) return 'correct-attribution';
+        if(doc.querySelector('.rating-label-misattributed')) return 'misattributed';
+        if(doc.querySelector('.rating-label-scam')) return 'scam';
+        if(doc.querySelector('.rating-label-ledgend')) return 'ledgend';
+        if(doc.querySelector('.rating-label-labeled-satire')) return 'labeled-satire';
+        if(doc.querySelector('.raitng-label-lost-ledgend')) return 'lost-ledgend';
 
         return null;
     });
