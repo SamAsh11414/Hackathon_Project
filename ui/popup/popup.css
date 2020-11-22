@@ -1,7 +1,10 @@
 #content {
+    border: 5px solid black;
+    border-radius: 5px;
     background-color: white;
     color: black;
     height: 100px;
+    width: 100px;
 }
 
 :host {

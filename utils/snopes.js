@@ -49,6 +49,8 @@
 //     });
 // }
 
+//TODO: Make old code worky
+
 const url = "https://yfrdx308zd-dsn.algolia.net/1/indexes/*/queries?x-algolia-agent=Algolia for vanilla JavaScript (lite) 3.21.1;instantsearch.js 1.11.15;JS Helper 2.19.0&x-algolia-application-id=YFRDX308ZD&x-algolia-api-key=7da15c5275374261c3a4bdab2ce5d321"
 function searchSnopes(searchString) {
     return fetch(url, {
@@ -57,10 +59,10 @@ function searchSnopes(searchString) {
             'Accept': 'application/json',
             'content-type': 'application/x-www-form-urlencoded'
         },
-        body: `{"requests":[{"indexName":"wp_live_searchable_posts","params":"query=${searchString}&hitsPerPage=10&page=1&highlightPreTag=__ais-highlight__&highlightPostTag=__%2Fais-highlight__&facetingAfterDistinct=true&facets=%5B%22taxonomies_hierarchical.category.lvl0%22%2C%22post_author.display_name%22%2C%22post_date%22%5D&tagFilters="}]}`
-    }).then(res => res.json()).then(json => {
-        return json.results[0].hits[0];
-    });
+        body: `{"requests":[{"indexName":"wp_live_searchable_posts","params":"query=${searchString}&hitsPerPage=10&page=0&highlightPreTag=__ais-highlight__&highlightPostTag=__%2Fais-highlight__&facetingAfterDistinct=true&facets=%5B%22taxonomies_hierarchical.category.lvl0%22%2C%22post_author.display_name%22%2C%22post_date%22%5D&tagFilters="}]}`
+    })
+    .then(res => res.json())
+    .then(json => json => json.results[0].hits[0]);
 }
 
 async function getTrueFalseValue(searchString) {

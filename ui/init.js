@@ -16,11 +16,11 @@ window.addEventListener('mouseup', e => {
     const selectionString = selection.toString();
     console.log(selectionString);
     if (selectionString.length > 1) {
-        getTrueFalseValue(selectionString).then(value => {
+        searchSnopes(selectionString).then(searchResult => {
             const popup = createPopup(e.clientX, e.clientY, value);
             document.body.appendChild(popup);
             document.addEventListener('click', () => popup.remove(), { once: true });
-        }, e => console.log(e));
+        });
 
         // const selObj = document.getSelection();
         // const oRange = selobj.getRangeAt(0);

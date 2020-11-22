@@ -1,5 +1,7 @@
-function createStickyNote() {
+function createStickyNote(ix, iy) {
     const stickyNote = document.createElement('div');
+    stickyNote.style.top = iy;
+    stickyNote.style.left = ix;
 
     setShadow({
         shadow: stickyNote.attachShadow({ mode: 'closed' }),
@@ -31,10 +33,15 @@ function createStickyNote() {
 
         window.addEventListener('mouseup', () => dragging = false);
 
+
+        const messageId = Math.floor(Math.random()*Math.random()*1000000000000);
+
+        browser.runtime.sendMessage({ type: 'saveNote', data: { message: '', messageId: messageId }})
+
         // autosave
         const textarea = shadow.getElementById('note');
         textarea.addEventListener('input', throttle(() => {
-            browser.runtime.sendMessage({ type: 'saveNote', data: textarea.value });
+            browser.runtime.sendMessage({ type: 'saveNote', data: { message: textarea.value, messageId: messageId } });
         }, 500));
     });
     return stickyNote;

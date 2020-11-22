@@ -1,6 +1,6 @@
 function createPopup(x, y, content) {
     const popup = document.createElement('div');
-    popup.style.top = y + 'px';
+    popup.style.top = y + popup.offsetHeight + 'px';
     popup.style.left = x + 'px';
     
     setShadow({
