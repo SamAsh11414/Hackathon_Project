@@ -101,7 +101,8 @@ const contentScripts = [
     '/ui/sidebaropener/sidebaropener.js',
     '/ui/sidebar/sidebar.js',
     '/ui/stickynote/stickynote.js',
-    '/ui/popup/popup.js'
+    '/ui/popup/popup.js',
+    '/ui/init.js'
 ];
 browser.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
     if (tab.url === 'about:blank' || !tab.url) return; 
