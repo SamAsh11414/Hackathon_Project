@@ -126,7 +126,7 @@ browser.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
                         '%cfile failed: %c"%s", error:',
                         'font: 1.2em monospace;',
                         'font: 1.2em monospace; color: blue;',
-                        path,
+                        path
                     );
                     console.error(error);
                 }
