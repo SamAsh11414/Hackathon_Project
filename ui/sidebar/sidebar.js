@@ -1,14 +1,11 @@
 class MASidebar extends HTMLElement {
     constructor() {
         super();
-        const shadow = this.attachShadow({ mode: 'closed' });
-        getText('sidebar/sidebar.html').then(text => {
-            const linkElem = document.createElement('link');
-            linkElem.setAttribute('rel', 'stylesheet');
-            linkElem.setAttribute('href', browser.runtime.getURL('Factcheck.css'));
-            shadow.appendChild(linkElem);
-            shadow.appendChild(document.body);
-
+        setShadow({
+            shadow: this.attachShadow({ mode: 'closed' }),
+            html: 'ui/sidebar/sidebar.html',
+            css: 'ui/sidebar/sidebar.html'
+        }).then(shadow => {
             const tabs = shadow.getElementById('tabs');
             tabs.addEventListener('click', e => {
                 const tabId = e.target.dataset.tabId;

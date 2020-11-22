@@ -1,16 +1,16 @@
 class MAStickyNote extends HTMLElement {
     constructor() {
         super();
-        const shadow = this.attachShadow({ mode: 'open' });
-        const that = this;
-        getText('ui/note/stickynote.html').then(document => {
-            shadow.appendChild(document.body);
+        setShadow({
+            shadow: this.attachShadow({ mode: 'open' }),
+            html: 'ui/note/stickynote.html',
+            css: 'ui/note/stickynote.css',
+        }).then(shadow => {
             // this.textarea = document.getElementById('note');
             // this.textarea.addEventListener('input', throttle(() => {
             //     runtime.sendMessage();
             // }, 200))
-            console.log(document)
-
+            
             let moving = false;
             window.addEventListener('mousedown', e => {
                 // console.log('down')

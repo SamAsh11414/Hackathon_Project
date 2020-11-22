@@ -2,10 +2,13 @@
 class MASidebarOpener extends HTMLElement {
     constructor() {
         super();
-        const shadow = this.attachShadow({ mode: 'closed' });
-        console.log('shadow was made')
-        getText('Sidebar/sidebaropener.html').then(document => {
-            shadow.appendChild(document.body);
+        console.log('aoeu')
+        setShadow({
+            shadow: this.attachShadow({ mode: 'closed' }),
+            html: 'ui/sidebaropener/sidebaropener.html',
+            css: 'ui/sidebaropener/sidebaropener.css'
+        }).then(shadow => {
+            console.log(shadow.getElementId('sanity'))
             shadow.getElementId('sanity').addEventListener('click', e => {
                 console.log('called click handler')
                 if (this.sidebar.style.display === 'none') {
